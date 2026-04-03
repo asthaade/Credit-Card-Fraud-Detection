@@ -59,6 +59,31 @@ The model achieved:
 - **Recall:** ~0.79
 - **MCC:** ~0.88
 
+---
+
+## 📊 Visualizing the Results
+
+### 1. Correlation Heatmap
+The heatmap illustrates the relationship between all features (V1-V28), Time, and Amount. 
+
+<img src="images/correlation_heatmap.png" width="700" alt="Correlation Heatmap">
+
+**What this shows:** * Most features (V1-V28) are not strongly correlated with each other because they are the result of **Principal Component Analysis (PCA)**. 
+* We look for features that have a high positive or negative correlation with the `Class` column, as these are the most "predictive" variables for identifying fraud.
+
+### 2. Confusion Matrix
+The confusion matrix is the ultimate "report card" for our fraud detection model.
+
+<img src="images/confusion_matrix.png" width="500" alt="Confusion Matrix">
+
+**What this shows:**
+* **True Negatives (Top-Left):** Legitimate transactions correctly identified as "Normal."
+* **True Positives (Bottom-Right):** Fraudulent transactions correctly identified as "Fraud."
+* **False Positives (Top-Right):** Normal transactions wrongly flagged as fraud (The "Annoyance" factor for customers).
+* **False Negatives (Bottom-Left):** Fraudulent transactions the model missed (The "Risk" factor for the bank).
+
+---
+
 ## 📂 Project Structure
 ```text
 ├── images/             # generated images (output)
