@@ -16,6 +16,11 @@ The goal is to minimize financial loss while ensuring that genuine customers are
 * **Scikit-Learn:** Provides the `RandomForestClassifier` and robust evaluation metrics.
 * **Jupyter Notebook / VS Code:** Development environment.
 
+## 🧠 Algorithm: Random Forest Classifier
+The model uses an ensemble of Decision Trees. Each tree is trained on a random subset of data (bootstrapping) and a random subset of features.
+- **Formula for Prediction:** The final classification is decided by a "majority vote" across all trees.
+- **Handling Imbalance:** By using multiple trees, the model reduces variance and is less likely to be biased by the majority class (Valid transactions).
+
 ## 📊 Dataset Description
 The project uses the **Credit Card Fraud Detection Dataset** (Kaggle).
 - **Total Transactions:** 284,807
