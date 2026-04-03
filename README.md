@@ -66,7 +66,7 @@ The model achieved:
 ### 1. Correlation Heatmap
 The heatmap illustrates the relationship between all features (V1-V28), Time, and Amount. 
 
-<img src="images/correlation_heatmap.png" width="700" alt="Correlation Heatmap">
+<img src="images/correlation_heatmap.PNG" width="700" alt="Correlation Heatmap">
 
 **What this shows:** * Most features (V1-V28) are not strongly correlated with each other because they are the result of **Principal Component Analysis (PCA)**. 
 * We look for features that have a high positive or negative correlation with the `Class` column, as these are the most "predictive" variables for identifying fraud.
@@ -74,7 +74,7 @@ The heatmap illustrates the relationship between all features (V1-V28), Time, an
 ### 2. Confusion Matrix
 The confusion matrix is the ultimate "report card" for our fraud detection model.
 
-<img src="images/confusion_matrix.png" width="500" alt="Confusion Matrix">
+<img src="images/confusion_matrix.PNG" width="500" alt="Confusion Matrix">
 
 **What this shows:**
 * **True Negatives (Top-Left):** Legitimate transactions correctly identified as "Normal."
