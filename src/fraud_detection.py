@@ -4,79 +4,74 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib import gridspec
 
-# Loading the Data
+# Loading the dataset
 
-data = pd.read_csv("creditcard.csv")
-print(data.head())
-print(data.describe())
+df = pd.read_csv("creditcard.csv")
+print(df.head())
+print(df.describe())
 
 # Analyzing Class Distribution
 
-fraud = data[data['Class'] == 1]
-valid = data[data['Class'] == 0]
-outlierFraction = len(fraud)/float(len(valid))
-print(outlierFraction)
-print('Fraud Cases: {}'.format(len(data[data['Class'] == 1])))
-print('Valid Transactions: {}'.format(len(data[data['Class'] == 0])))
+fraud_cases = df[df['Class'] == 1]
+valid_cases = df[df['Class'] == 0]
+outlier_fraction = len(fraud_cases) / float(len(valid_cases))
+print(outlier_fraction)
+print('Fraud Cases: {}'.format(len(df[df['Class'] == 1])))
+print('Valid Transactions: {}'.format(len(df[df['Class'] == 0])))
 
 # Exploring Transaction Amounts
 
-print("Amount details of the fraudulent transaction")
-fraud.Amount.describe()
-
-print("details of valid transaction")
-valid.Amount.describe()
+print("Fraud transaction amount details")
+fraud_cases.Amount.describe()
+print("Valid transaction amount details")
+valid_cases.Amount.describe()
 
 # Plotting Correlation Matrix
 
-corrmat = data.corr()
-fig = plt.figure(figsize = (12, 9))
-sns.heatmap(corrmat, vmax = .8, square = True)
+correlation_matrix = df.corr()
+figure = plt.figure(figsize=(12, 9))
+sns.heatmap(correlation_matrix, vmax=.8, square=True)
 plt.show()
 
-#  Preparing Data
+# Preparing Data
 
-X = data.drop(['Class'], axis = 1)
-Y = data["Class"]
-print(X.shape)
-print(Y.shape)
-
-xData = X.values
-yData = Y.values
-
+features = df.drop(['Class'], axis=1)
+target = df["Class"]
+print(features.shape)
+print(target.shape)
+X_values = features.values
+Y_values = target.values
 from sklearn.model_selection import train_test_split
-xTrain, xTest, yTrain, yTest = train_test_split(
-        xData, yData, test_size = 0.2, random_state = 42)
-
+X_train, X_test, Y_train, Y_test = train_test_split(
+    X_values, Y_values, test_size=0.2, random_state=42
+)
 from sklearn.ensemble import RandomForestClassifier
 
 # Building and Training the Model
 
-rfc = RandomForestClassifier()
-rfc.fit(xTrain, yTrain)
-
-yPred = rfc.predict(xTest)
+rf_model = RandomForestClassifier()
+rf_model.fit(X_train, Y_train)
+Y_pred = rf_model.predict(X_test)
 
 # Evaluating the Model
 
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, matthews_corrcoef, confusion_matrix 
-accuracy = accuracy_score(yTest, yPred)
-precision = precision_score(yTest, yPred)
-recall = recall_score(yTest, yPred)
-f1 = f1_score(yTest, yPred)
-mcc = matthews_corrcoef(yTest, yPred)
-
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, matthews_corrcoef, confusion_matrix
+acc = accuracy_score(Y_test, Y_pred)
+prec = precision_score(Y_test, Y_pred)
+rec = recall_score(Y_test, Y_pred)
+f1_val = f1_score(Y_test, Y_pred)
+mcc_score = matthews_corrcoef(Y_test, Y_pred)
 print("Model Evaluation Metrics:")
-print(f"Accuracy: {accuracy:.4f}")
-print(f"Precision: {precision:.4f}")
-print(f"Recall: {recall:.4f}")
-print(f"F1-Score: {f1:.4f}")
-print(f"Matthews Correlation Coefficient: {mcc:.4f}")
-
-conf_matrix = confusion_matrix(yTest, yPred)
+print(f"Accuracy: {acc:.4f}")
+print(f"Precision: {prec:.4f}")
+print(f"Recall: {rec:.4f}")
+print(f"F1-Score: {f1_val:.4f}")
+print(f"Matthews Correlation Coefficient: {mcc_score:.4f}")
+conf_mat = confusion_matrix(Y_test, Y_pred)
 plt.figure(figsize=(8, 6))
-sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues",
-        xticklabels=['Normal', 'Fraud'], yticklabels=['Normal', 'Fraud'])
+sns.heatmap(conf_mat, annot=True, fmt="d", cmap="Blues",
+            xticklabels=['Normal', 'Fraud'],
+            yticklabels=['Normal', 'Fraud'])
 plt.title("Confusion Matrix")
 plt.xlabel("Predicted Class")
 plt.ylabel("True Class")
